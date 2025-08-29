@@ -9,7 +9,7 @@ add_library(orchestrator_lib STATIC
 
 target_include_directories(orchestrator_lib PUBLIC include)
 
-target_link_libraries(orchestrator_lib PUBLIC nlohmann_json::nlohmann_json)
+target_link_libraries(orchestrator_lib PUBLIC nlohmann_json::nlohmann_json spdlog::spdlog)
 if(TARGET dpp)
     target_link_libraries(orchestrator_lib PUBLIC dpp)
 else()
