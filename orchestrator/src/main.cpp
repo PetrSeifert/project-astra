@@ -14,7 +14,7 @@ public:
   explicit ProcessTool(std::string exec_path)
       : exec_path_(std::move(exec_path)) {}
 
-  nlohmann::json call(const nlohmann::json& request) override {
+  nlohmann::json call(const nlohmann::json &request) override {
     // Very naive implementation using popen
     std::string cmd = exec_path_;
 #ifdef _WIN32
@@ -22,26 +22,23 @@ public:
 #else
     FILE *pipe = popen(cmd.c_str(), "w+");
 #endif
-    if (!pipe) {
+    if (!pipe)
       return nlohmann::json{{"error", "spawn_failed"}};
-    }
     std::string req = request.dump();
     fwrite(req.data(), 1, req.size(), pipe);
     fflush(pipe);
 
     char buffer[4096];
     std::string response;
-    while (fgets(buffer, sizeof(buffer), pipe)) {
+    while (fgets(buffer, sizeof(buffer), pipe))
       response += buffer;
-    }
 #ifdef _WIN32
     _pclose(pipe);
 #else
     pclose(pipe);
 #endif
-    if (response.empty()) {
+    if (response.empty())
       return nlohmann::json{};
-    }
     return nlohmann::json::parse(response, nullptr, false);
   }
 
@@ -50,7 +47,7 @@ private:
 };
 
 int main() {
-  const char* token = std::getenv("DISCORD_TOKEN");
+  const char *token = std::getenv("DISCORD_TOKEN");
   const uint32_t intents = dpp::i_default_intents | dpp::i_message_content |
                            dpp::i_guild_messages | dpp::i_direct_messages;
   if (!token) {

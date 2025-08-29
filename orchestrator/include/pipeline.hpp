@@ -1,18 +1,18 @@
 #pragma once
 
+#include "tool_registry.hpp"
 #include <functional>
-#include <unordered_map>
-#include <vector>
 #include <mutex>
 #include <nlohmann/json.hpp>
-#include "tool_registry.hpp"
+#include <unordered_map>
+#include <vector>
 
 /** Utterance JSON structure. */
 struct Utterance {
-    std::string user_id;
-    double t0;
-    double t1;
-    std::string text;
+  std::string user_id;
+  double t0;
+  double t1;
+  std::string text;
 };
 
 /**
@@ -20,14 +20,15 @@ struct Utterance {
  */
 class UserPipeline {
 public:
-    UserPipeline(ToolRegistry& registry,
-                 std::function<void(const std::vector<int16_t>&)> send_audio);
+  UserPipeline(ToolRegistry &registry,
+               std::function<void(const std::vector<int16_t> &)> send_audio);
 
-    void process_audio(const std::vector<int16_t>& pcm, const std::string& user_id);
+  void process_audio(const std::vector<int16_t> &pcm,
+                     const std::string &user_id);
 
 private:
-    ToolRegistry& registry_;
-    std::function<void(const std::vector<int16_t>&)> send_audio_;
+  ToolRegistry &registry_;
+  std::function<void(const std::vector<int16_t> &)> send_audio_;
 };
 
 /**
@@ -35,14 +36,14 @@ private:
  */
 class PipelineManager {
 public:
-    explicit PipelineManager(ToolRegistry& registry);
+  explicit PipelineManager(ToolRegistry &registry);
 
-    void on_audio_chunk(const std::string& user_id,
-                        const std::vector<int16_t>& pcm,
-                        std::function<void(const std::vector<int16_t>&)> send_audio);
+  void
+  on_audio_chunk(const std::string &user_id, const std::vector<int16_t> &pcm,
+                 std::function<void(const std::vector<int16_t> &)> send_audio);
 
 private:
-    ToolRegistry& registry_;
-    std::unordered_map<std::string, std::unique_ptr<UserPipeline>> pipelines_;
-    std::mutex mutex_;
+  ToolRegistry &registry_;
+  std::unordered_map<std::string, std::unique_ptr<UserPipeline>> pipelines_;
+  std::mutex mutex_;
 };
