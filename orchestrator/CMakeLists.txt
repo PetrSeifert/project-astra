@@ -5,6 +5,9 @@ add_library(orchestrator_lib STATIC
     src/tool_registry.cpp
     src/discord_bot.cpp
     src/pipeline.cpp
+    src/commands_module.cpp
+    src/voice_module.cpp
+    src/message_module.cpp
 )
 
 target_include_directories(orchestrator_lib PUBLIC include)
