@@ -9,7 +9,8 @@ Project Astra is a modular, local-first AI companion framework. The goal is to p
 - **Extensibility**: new tools (e.g., `play_sfx`, `switch_scene`) can be added by implementing the `ITool` interface or running a sidecar process.
 
 ## Directory Layout
-- `orchestrator/` – core C++ bot with tool registry and pipeline logic.
+- `apps/discord_bot/` – Discord bot executable and its modules (commands, voice, messages).
+- `apps/orchestrator_brain/` – Brain/orchestrator executable for JSON stdio processing (LLM logic).
 - `tools/` – standalone executables wrapping Whisper STT, Llama LLM, and Piper TTS.
 - `third_party/` – git submodules for dependencies (D++, nlohmann_json, whisper.cpp, llama.cpp, piper).
 
@@ -25,9 +26,9 @@ Project Astra is a modular, local-first AI companion framework. The goal is to p
    cmake -S . -B build
    cmake --build build
    ```
-3. Run the orchestrator (requires a Discord bot token in `DISCORD_TOKEN` env var):
+3. Run the Discord bot (requires a Discord bot token in `DISCORD_TOKEN` env var):
    ```bash
-   ./build/orchestrator/orchestrator
+   ./build/bin/discord_bot
    ```
 
 ## Roadmap

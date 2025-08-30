@@ -10,5 +10,6 @@ set(DPP_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(third_party/DPP EXCLUDE_FROM_ALL)
 add_subdirectory(third_party/spdlog EXCLUDE_FROM_ALL)
 
-add_subdirectory(orchestrator)
 add_subdirectory(tools)
+add_subdirectory(apps/discord_bot)
+add_subdirectory(apps/orchestrator_brain)

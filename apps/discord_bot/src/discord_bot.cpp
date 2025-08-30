@@ -5,9 +5,8 @@
 #include "voice_module.hpp"
 #include <spdlog/spdlog.h>
 
-DiscordBot::DiscordBot(const std::string &token, uint32_t intents,
-                       ToolRegistry &registry)
-    : bot_(token, intents), registry_(registry), pipelines_(registry_) {
+DiscordBot::DiscordBot(const std::string &token, uint32_t intents)
+    : bot_(token, intents) {
   setup_handlers();
 }
 
@@ -51,11 +50,8 @@ void DiscordBot::setup_handlers() {
     auto voice_client = event.voice_client;
     if (!voice_client)
       return;
-    auto send_audio = [voice_client](const std::vector<int16_t> &pcm_out) {
-      // TODO: encode to Opus and send via voice_client->send_audio_raw
-      (void)pcm_out;
-    };
-    pipelines_.on_audio_chunk(std::to_string(event.user_id), pcm, send_audio);
+
+    // TODO: Send audio to STT
   });
 
   commands_module_ = std::make_unique<CommandsModule>(*this);
@@ -75,3 +71,5 @@ void DiscordBot::register_command(
       PendingCommand{name, description, options, handler});
   command_handlers_[name] = std::move(handler);
 }
+
+

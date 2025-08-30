@@ -1,7 +1,5 @@
 #pragma once
 
-#include <dpp/dpp.h>
-
 class DiscordBot;
 
 class MessageModule {
@@ -11,3 +9,5 @@ public:
 private:
   DiscordBot &bot_;
 };
+
+

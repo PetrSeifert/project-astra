@@ -41,3 +41,5 @@ void CommandsModule::handleSlashCommand(const dpp::slashcommand_t &event) {
   else
     spdlog::warn("Received unknown command: {}", name);
 }
+
+
